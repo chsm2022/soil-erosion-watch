@@ -97,7 +97,7 @@ exports.aggregateStack = function(masked_collection, band_list, time_interval, o
         // A condition is provided in case the time interval does not contain any cloud-free images,
         // which likely happens in the sub-tropics when a short aggregation interval is used.
         agg_image = ee.Algorithms.If(
-          masked_collection.filterDate(time_interval.get(0), time_interval.get(1)).size().gt(0),
+          ee.ImageCollection(masked_collection).filterDate(time_interval.get(0), time_interval.get(1)).size().gt(0),
                                        masked_collection.filterDate(time_interval.get(0), time_interval.get(1))
                                        .select(band_list)
                                        .reduce(ee.Reducer.geometricMedian(band_list.length), 4)
